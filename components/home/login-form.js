@@ -79,7 +79,7 @@ export default function LoginForm({ setView }) {
         </Form.Item>
         <p>Belum punya akun ? <Button type="link" onClick={() => setView("register")}>Daftar</Button></p>
         <Form.Item {...tailLayout}>
-          <Button block type="primary" htmlType="submit" onClick={() => onFormDone()}>
+          <Button block className="mt-2" type="primary" htmlType="submit" onClick={() => onFormDone()}>
             Masuk
           </Button>
         </Form.Item>

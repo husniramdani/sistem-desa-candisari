@@ -34,7 +34,7 @@ export default function RegisterForm({ setView }) {
         onFinishFailed={onFinishFailed}
       >
         <Form.Item
-          label="NIK (Nomor Induk Keluarga)"
+          label="NIK (Nomor Identitas Kependudukan)"
           name="nik"
           rules={[
             {
@@ -92,7 +92,7 @@ export default function RegisterForm({ setView }) {
         </Form.Item>
         <p>Sudah punya akun ? <Button type="link" onClick={() => setView("login")}>Masuk</Button></p>
         <Form.Item>
-          <Button block type="primary" htmlType="submit" onClick={() => onFormDone()}>
+          <Button block className="mt-2" type="primary" htmlType="submit" onClick={() => onFormDone()}>
             Daftar
           </Button>
         </Form.Item>
