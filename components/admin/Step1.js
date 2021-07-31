@@ -19,8 +19,8 @@ const Step1 = ({ }) => {
     <>
       <Form.Item
         {...tailLayout}
-        label="Nama Kepala Desa"
-        name="nama"
+        label="Nama Perangkat Desa"
+        name="nama_perangkat_desa"
         rules={[
           {
             required: true,
@@ -28,7 +28,20 @@ const Step1 = ({ }) => {
           },
         ]}
       >
-        <Input placeholder="Masukkan Nama" />
+        <Input placeholder="Masukkan Nama Perangkat Desa" />
+      </Form.Item>
+      <Form.Item
+        {...tailLayout}
+        label="Jabatan"
+        name="jabatan"
+        rules={[
+          {
+            required: true,
+            message: 'Jabatan tidak boleh kosong!',
+          },
+        ]}
+      >
+        <Input placeholder="Masukkan Jabatan Perangkat Desa" />
       </Form.Item>
     </>
   )

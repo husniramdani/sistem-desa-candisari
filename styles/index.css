@@ -34,6 +34,14 @@
   scrollbar-width: none;  /* Firefox */
 }
 
+/* .wrapper-stepper{
+  .ant-steps-item-container {
+    .ant-steps-item-content{
+      width: 300px !important;
+    }
+  }
+} */
+
 .-z-1 {
   z-index: -1;
 }
@@ -53,7 +61,7 @@
 }
 
 .ant-form-item {
-  margin-bottom: 8px !important;
+  margin-bottom: 5px !important;
 }
 
 .full-width {

@@ -2,6 +2,7 @@ import { createStore, applyMiddleware, combineReducers } from 'redux'
 import { HYDRATE, createWrapper } from 'next-redux-wrapper'
 import thunkMiddleware from 'redux-thunk'
 import auth from './auth/reducer'
+import admin from './admin/reducer'
 
 const bindMiddleware = (middleware) => {
   if (process.env.NODE_ENV !== 'production') {
@@ -13,6 +14,7 @@ const bindMiddleware = (middleware) => {
 
 const combinedReducer = combineReducers({
   auth,
+  admin,
 })
 
 const reducer = (state, action) => {
@@ -46,7 +48,7 @@ const makeStore = () => {
 
         const persistConfig = {
             key: 'nextjs',
-            whitelist: ['auth'], // make sure it does not clash with server keys
+            whitelist: ['auth', 'admin'], // make sure it does not clash with server keys
             storage
         };
 

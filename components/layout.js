@@ -8,7 +8,7 @@ export default function Layout({ title, children }) {
         {/* <link rel="shortcut icon" href="/icon/logo.ico" /> */}
         <title>{title}</title>
       </Head>
-      {/* <Navbar title={title}/> */}
+      <Navbar title={title}/>
       {children}
     </>
   );
