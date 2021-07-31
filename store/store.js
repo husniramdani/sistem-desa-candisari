@@ -1,7 +1,7 @@
 import { createStore, applyMiddleware, combineReducers } from 'redux'
 import { HYDRATE, createWrapper } from 'next-redux-wrapper'
 import thunkMiddleware from 'redux-thunk'
-import creditScore from './credit-score/reducer'
+import auth from './auth/reducer'
 
 const bindMiddleware = (middleware) => {
   if (process.env.NODE_ENV !== 'production') {
@@ -12,7 +12,7 @@ const bindMiddleware = (middleware) => {
 }
 
 const combinedReducer = combineReducers({
-  creditScore,
+  auth,
 })
 
 const reducer = (state, action) => {
@@ -21,7 +21,7 @@ const reducer = (state, action) => {
       ...state, // use previous state
       ...action.payload, // apply delta from hydration
     }
-    if (state.creditScore) nextState.creditScore = state.creditScore
+    if (state.auth) nextState.auth = state.auth
     return nextState
   } else {
     return combinedReducer(state, action)
@@ -46,7 +46,7 @@ const makeStore = () => {
 
         const persistConfig = {
             key: 'nextjs',
-            whitelist: ['fromClient','creditScore'], // make sure it does not clash with server keys
+            whitelist: ['auth'], // make sure it does not clash with server keys
             storage
         };
 

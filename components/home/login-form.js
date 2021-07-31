@@ -1,5 +1,10 @@
+import React, { useEffect } from 'react';
 import { Form, Input, Button } from "antd";
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { useRouter } from 'next/router';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
+import { login } from '@store/auth/action'
 
 const layout = {
   layout: "vertical",
@@ -19,10 +24,18 @@ const tailLayout = {
 };
 
 
-export default function LoginForm({ setView }) {
+const LoginForm = (props, { setView }) => {
+  const router = useRouter()
   const [form] = Form.useForm();
   const onFinish = (values) => {
-    console.log('Success:', values);
+    if (values.username === "admin" && values.password === "admin") {
+      router.push("/dashboard")
+      const params = {
+        username: values.username,
+        isLogin: true,
+      }
+      props.login(params)
+    }
   };
   const onFinishFailed = (errorInfo) => {
     // console.log('Failed:', errorInfo);
@@ -31,6 +44,11 @@ export default function LoginForm({ setView }) {
     // message.success('Processing complete!');
     // console.log(form)
   }
+  useEffect(() => {
+    if (props.isLogin) {
+      router.push("/dashboard")
+    }
+  })
 
   return (
     <>
@@ -87,3 +105,16 @@ export default function LoginForm({ setView }) {
     </>
   );
 }
+
+const mapStateToProps = (state) => ({
+  username: state.auth.username,
+  isLogin: state.auth.isLogin,
+})
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    login: bindActionCreators(login, dispatch),
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(LoginForm)

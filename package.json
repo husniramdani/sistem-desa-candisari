@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "@ant-design/icons": "4.2.1",
+    "@react-pdf/renderer": "^2.0.17",
     "@tailwindcss/line-clamp": "^0.2.0",
     "antd": "4.3.0",
     "dayjs": "1.8.28",
