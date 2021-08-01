@@ -23,7 +23,7 @@ const Navbar = (props, { title }) => {
           <p className="font-semibold text-lg text-white ml-2 mb-0">Pemerintah Desa Candisari</p>
         </div>
         <button
-          className="text-white font-semibold"
+          className="text-white font-semibold border rounded px-5 py-2 hover:bg-white hover:text-blue-500"
           onClick={() => onLogout()}
         >
           Keluar
