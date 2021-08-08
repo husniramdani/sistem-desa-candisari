@@ -47,28 +47,6 @@ const steps = [
 
 const Dashboard = (props, { }) => {
   const router = useRouter()
-  // ini nanti ya
-  // const [showPdf, onShowPdf] = useState(false)
-  // const [visible, setVisible] = useState(false);
-  // const [confirmLoading, setConfirmLoading] = useState(false);
-  // const [modalText, setModalText] = useState('Content of the modal');
-  // const showModal = () => {
-  //   setVisible(true);
-  // };
-  // const handleOk = () => {
-  //   setModalText('The modal will be closed after two seconds');
-  //   setConfirmLoading(true);
-  //   setTimeout(() => {
-  //     setVisible(false);
-  //     setConfirmLoading(false);
-  //   }, 2000);
-  // };
-  // const handleCancel = () => {
-  //   console.log('Clicked cancel button');
-  //   setVisible(false);
-  // };
-
-  // skarang ini dulu
   const [current, setCurrent] = useState(0);
   const [form] = Form.useForm();
 
@@ -82,7 +60,7 @@ const Dashboard = (props, { }) => {
     } else if (current === 2) {
       props.addStep3(values);
     } else if (current === 3) {
-      // props.addStep4(values);
+      props.addStep4(values);
     }
   };
 
@@ -181,12 +159,12 @@ const Dashboard = (props, { }) => {
               </div>
               <div className="px-10 pb-5 flex justify-between">
                 <div>
-                  <BlobProvider document={<PdfDocument props={props} />}>
+                  {/* <BlobProvider document={<PdfDocument props={props} />}>
                     {({ blob, url, loading, error }) => {
                       // Do whatever you need with blob here
                       return loading ? <a>Loading...</a> : <a href={url}>{url}</a>
                     }}
-                  </BlobProvider>
+                  </BlobProvider> */}
                   {/* {current + 1 === steps.length && (
                     <PDFDownloadLink
                       document={<PdfDocument props={props} />}
@@ -221,37 +199,10 @@ const Dashboard = (props, { }) => {
           </div>
         </div>
       </Layout>
-      {/* <p className="text-3xl font-bold text-center">INI ADALAH DASHBOARD</p> */}
 
-      {/* Modal export pdf */}
-      {/* <Button type="primary" onClick={showModal}>
-        Open Modal with async logic
-      </Button>
-      <Modal
-        title="Title"
-        visible={visible}
-        onOk={handleOk}
-        confirmLoading={confirmLoading}
-        onCancel={handleCancel}
-      > */}
-      {/* <div className="bg-yellow-400">
-        <button onClick={() => window.location.reload()}>show pdf</button>
-
-        <PDFViewer width="400" height="600">
-          <PdfDocument />
-        </PDFViewer>
-      </div>
-      </Modal>
-      <PDFDownloadLink
-        document={
-          <PdfDocument />
-        }
-        fileName={`Surat Keterangan Umum Nomor.pdf`}
-      >
-        {({ blob, url, loading, error }) =>
-          loading ? "Loading document..." : "Export PDF"
-        }
-      </PDFDownloadLink> */}
+      <PDFViewer width="800" height="1200" className="m-auto">
+        <PdfDocument props={props} />
+      </PDFViewer>
     </>
   );
 }
