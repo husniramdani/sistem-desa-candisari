@@ -11,7 +11,8 @@ import Step2 from '@components/dashboard/Step2';
 import Step3 from '@components/dashboard/Step3';
 import Step4 from '@components/dashboard/Step4';
 import Layout from "@components/layout";
-import { addStep1, addStep2, addStep3, addStep4 } from '@store/admin/action'
+import { setStep, addStep1, addStep2, addStep3, addStep4, onResetForm } from '@store/admin/action'
+import moment from 'moment';
 
 const { Step } = Steps;
 
@@ -47,12 +48,12 @@ const steps = [
 
 const Dashboard = (props, { }) => {
   const router = useRouter()
-  const [current, setCurrent] = useState(0);
+  const [current, setCurrent] = useState(props?.current_step || 0);
   const [form] = Form.useForm();
 
   const onFinish = (values) => {
     increase();
-    console.log(values)
+    // console.log(values)
     if (current === 0) {
       props.addStep1(values);
     } else if (current === 1) {
@@ -69,16 +70,23 @@ const Dashboard = (props, { }) => {
   };
 
   const increase = () => {
-    if (current < 3) setCurrent(current + 1)
+    if (current < 3){
+      setCurrent(current + 1)
+      props.setStep(current + 1)
+    }
   };
   const decrease = () => {
-    if (current > 0) setCurrent(current - 1)
+    if (current > 0){
+      setCurrent(current - 1)
+      props.setStep(current - 1)
+    }
   };
 
   const onFormDone = () => {
     // form.resetFields()
     // message.success('Processing complete!');
     // console.log(form)
+    location.reload()
   }
 
   useEffect(() => {
@@ -91,23 +99,26 @@ const Dashboard = (props, { }) => {
     setCurrent(current)
   };
 
-  console.log("props", props)
+  const onResetForm = () => {
+    props.onResetForm();
+    location.reload();
+  }
+
   return (
     <>
       <Layout title="Desa Candisari">
-        {/* <div className="w-full text-center mt-32">
-          <h2 className="lg:hidden text-4xl font-bold">Buka di laptop ya!</h2>
-        </div> */}
-        <div className="w-4/6 py-16 mx-auto">
+        <div className="lg:hidden w-full text-center mt-32">
+          <h2 className="text-4xl font-bold">Buka di laptop ya!</h2>
+        </div>
+        <div className="hidden lg:flex flex-col w-4/6 py-16 mx-auto">
           <h2 className="mb-0 text-2xl font-bold">Surat Keterangan Umum</h2>
           <h5 className="">Pemerintah Desa Candisari</h5>
-          {/* <hr className="mt-8"/> */}
           <div className="flex flex-row mt-8 border">
             <div className="w-4/12 border-r pl-5 py-10">
               <Steps
                 progressDot
                 current={current}
-                onChange={(e) => onChange(e)}
+                // onChange={(e) => onChange(e)}
                 direction="vertical"
                 className=""
               >
@@ -128,7 +139,7 @@ const Dashboard = (props, { }) => {
                 nama: props.nama,
                 jenis_kelamin: props.jenis_kelamin,
                 tempat_lahir: props.tempat_lahir,
-                tgl_lahir: props.tgl_lahir,
+                tgl_lahir: props.tgl_lahir ? moment(props.tgl_lahir) : null,
                 agama: props.agama,
                 pekerjaan: props.pekerjaan,
                 tempat_tinggal: props.tempat_tinggal,
@@ -136,14 +147,14 @@ const Dashboard = (props, { }) => {
                 warga_negara: props.warga_negara,
                 nik: props.nik,
                 no_kk: props.no_kk,
-                start_date: props.start_date,
-                end_date: props.end_date,
+                start_date: props.start_date ? moment(props.start_date) : null,
+                end_date: props.end_date ? moment(props.end_date) : null,
                 keperluan: props.keperluan,
                 keterangan: props.keterangan,
 
                 nomor_surat: props.nomor_surat,
                 tempat_surat: props.tempat_surat,
-                tgl_surat: props.tgl_surat,
+                tgl_surat: props.tgl_surat ? moment(props.tgl_surat) : null,
               }}
               onFinish={onFinish}
               onFinishFailed={onFinishFailed}
@@ -151,31 +162,46 @@ const Dashboard = (props, { }) => {
             >
 
               <div className="px-10 pt-10 pb-5">
-                <p>Tahap {current + 1}/5</p>
-                <h3 className="mb-0 text-2xl font-bold">{steps[current].title}</h3>
-                {/* <h5>{steps[current].description}</h5> */}
+                <div className="flex flex-row justify-between">
+                  <div>
+                    <p>Tahap {current + 1}/4</p>
+                    <h3 className="mb-0 text-2xl font-bold">{steps[current].title}</h3>
+                  </div>
+                  {current + 1 === steps.length && (
+                    <button
+                      onClick={() => onResetForm()}
+                      className="h-8 bg-yellow-500 text-white px-2 border-2 border-yellow-500 hover:bg-white hover:text-yellow-600"
+                    >
+                      Buat Form Baru
+                    </button>
+                  )}
+                </div>
                 <hr className="mt-8" />
                 {steps[current].content}
               </div>
               <div className="px-10 pb-5 flex justify-between">
                 <div>
-                  {/* <BlobProvider document={<PdfDocument props={props} />}>
-                    {({ blob, url, loading, error }) => {
-                      // Do whatever you need with blob here
-                      return loading ? <a>Loading...</a> : <a href={url}>{url}</a>
-                    }}
-                  </BlobProvider> */}
-                  {/* {current + 1 === steps.length && (
-                    <PDFDownloadLink
-                      document={<PdfDocument props={props} />}
-                      fileName={`Surat Keterangan Umum Nomor.pdf`}
-                      className="bg-green-500 text-white px-4 py-2 border border-green-500 hover:bg-white hover:text-green-500 float-left"
-                    >
-                      {({ blob, url, loading, error }) =>
-                        loading ? "Loading document..." : "Export PDF"
-                      }
-                    </PDFDownloadLink>
-                  )} */}
+                  {current + 1 === steps.length && (
+                    <BlobProvider document={<PdfDocument props={props} />}>
+                      {({ blob, url, loading, error }) => {
+                        // Do whatever you need with blob here
+                        return loading ? <a>Loading...</a> :
+                        <div className="flex flex-col">
+                          <a
+                            disabled={!url ? true : false}
+                            download={`Surat_ketarangan_${props?.nama || ''}`}
+                            href={url}
+                            className="bg-green-500 text-white px-4 py-2 border border-green-500 hover:bg-white hover:text-green-500 float-left">
+                            Download Surat_Keterangan_{props?.nama || ''}
+                            {/* {url} */}
+                          </a>
+                          {!url &&
+                            <p className="text-red-400 font-semibold">Click simpan terlebih dahulu jika download button terdisable</p>
+                          }
+                        </div>
+                      }}
+                    </BlobProvider>
+                  )}
                 </div>
                 <div>
                   {current > 0 && current < steps.length && (
@@ -200,9 +226,9 @@ const Dashboard = (props, { }) => {
         </div>
       </Layout>
 
-      <PDFViewer width="800" height="1200" className="m-auto">
+      {/* <PDFViewer width="800" height="1200" className="m-auto">
         <PdfDocument props={props} />
-      </PDFViewer>
+      </PDFViewer> */}
     </>
   );
 }
@@ -211,6 +237,7 @@ const mapStateToProps = (state) => ({
   username: state.auth.username,
   isLogin: state.auth.isLogin,
 
+  current_step: state.admin.current_step,
   nama_perangkat_desa: state.admin.nama_perangkat_desa,
   jabatan: state.admin.jabatan,
 
@@ -240,9 +267,12 @@ const mapDispatchToProps = (dispatch) => {
     login: bindActionCreators(login, dispatch),
     logout: bindActionCreators(logout, dispatch),
 
+    setStep: bindActionCreators(setStep, dispatch),
     addStep1: bindActionCreators(addStep1, dispatch),
     addStep2: bindActionCreators(addStep2, dispatch),
     addStep3: bindActionCreators(addStep3, dispatch),
+    addStep4: bindActionCreators(addStep4, dispatch),
+    onResetForm: bindActionCreators(onResetForm, dispatch),
   }
 }
 

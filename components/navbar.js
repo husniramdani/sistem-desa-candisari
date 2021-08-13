@@ -2,12 +2,14 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { useRouter } from 'next/router';
 import { logout } from '@store/auth/action';
+import { onResetForm } from '@store/admin/action'
 
 const Navbar = (props, { title }) => {
   const router = useRouter()
 
   const onLogout = () => {
     props.logout();
+    props.onResetForm();
     router.push("/")
   }
 
@@ -41,6 +43,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => {
   return {
     logout: bindActionCreators(logout, dispatch),
+    onResetForm: bindActionCreators(onResetForm, dispatch),
   }
 }
 

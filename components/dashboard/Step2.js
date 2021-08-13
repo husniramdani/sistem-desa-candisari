@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
-import { Row, Col, Form, Input, Radio, Select } from "antd";
-import DatePicker from "@components/DatePicker";
+import { Row, Col, Form, Input, Radio, Select, DatePicker } from "antd";
+// import DatePicker from "@components/DatePicker";
 
 const tailLayout = {
   labelCol: {
@@ -42,9 +42,9 @@ const Step2 = ({ }) => {
           },
         ]}
       >
-        <Radio.Group initialValue="pria">
-          <Radio value="pria">Pria</Radio>
-          <Radio value="wanita">Wanita</Radio>
+        <Radio.Group initialValue="Laki-laki">
+          <Radio value="Laki-laki">Laki-laki</Radio>
+          <Radio value="perempuan">Perempuan</Radio>
         </Radio.Group>
       </Form.Item>
       <Row gutter={16}>

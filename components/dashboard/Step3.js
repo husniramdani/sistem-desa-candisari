@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
-import { Form, Input, Row, Col } from "antd";
-import DatePicker from "@components/DatePicker";
+import { Form, Input, Row, Col, DatePicker } from "antd";
+// import DatePicker from "@components/DatePicker";
 
 const tailLayout = {
   labelCol: {
@@ -109,7 +109,7 @@ const Step3 = ({ }) => {
           },
         ]}
       >
-        <Input placeholder="Masukkan Keperluan" />
+        <Input.TextArea autoSize={{ minRows: 3 }} placeholder="Masukkan Keperluan" />
       </Form.Item>
       <Form.Item
         {...tailLayout}
@@ -122,7 +122,7 @@ const Step3 = ({ }) => {
           },
         ]}
       >
-        <Input placeholder="Masukkan keterangan lain" />
+        <Input.TextArea autoSize={{ minRows: 3 }} placeholder="Masukkan keterangan lain" />
       </Form.Item>
     </>
   )

@@ -1,5 +1,10 @@
 import React from 'react';
 import { Page, Text, View, Document, StyleSheet, Image } from '@react-pdf/renderer';
+import moment from 'moment';
+import 'moment/locale/id';
+const dateFormat = (date) => {
+  return moment(date).locale('id').format('DD MMMM YYYY')
+}
 
 export const PdfDocument = ({ props }) => {
   return (
@@ -20,11 +25,14 @@ export const PdfDocument = ({ props }) => {
           </View>
         </View>
         <View style={{ paddingHorizontal: 30 }}>
-          <View style={[s.lineDividerBold, s.mt30]} />
+          <View style={[s.lineDividerBold, s.mt20]} />
+        </View>
+        <View style={[{ paddingHorizontal: 30 }, s.textField, s.mt10]}>
+          <Text style={s.labelField}>Kode Desa : 08212003</Text>
         </View>
         <View style={[s.headerContentContainer, s.mt10]}>
           <Text style={s.header3}>SURAT KETERANGAN</Text>
-          <Text style={s.header4}>
+          <Text style={[s.header4, s.mt5]}>
             NOMOR : {props?.nomor_surat || ""}
           </Text>
         </View>
@@ -70,7 +78,7 @@ export const PdfDocument = ({ props }) => {
               <Text style={s.labelField}>Tempat/Tanggal Lahir</Text>
               <Text style={s.dividerField}>:</Text>
               <Text style={s.contentField}>
-                {props?.tempat_lahir || ""}/{props?.tgl_lahir || ""}
+                {props?.tempat_lahir || ""} / {props?.tgl_lahir ? dateFormat(props?.tgl_lahir) : ""}
               </Text>
             </View>
             {/* kewarganegaraan */}
@@ -100,18 +108,17 @@ export const PdfDocument = ({ props }) => {
               <Text style={s.contentField}>{props?.tempat_tinggal || ""}</Text>
             </View>
             <View style={[s.contentBasic]}>
-              <Text style={s.textBasic}>
-                Surat bukti diri :
-              </Text>
-              {/* nik */}
+              {/* Surat bukti diri */}
               <View style={[s.textField, s.mt5]}>
-                <Text style={s.labelField}>NIK.</Text>
-                <Text style={s.contentField}>{props?.nik || ""}</Text>
+                <Text style={s.labelField}>Surat bukti diri</Text>
+                <Text style={s.dividerField}>:</Text>
+                <Text style={s.contentField}>NIK. {"    "}{props?.nik || ""}</Text>
               </View>
               {/* no kk */}
               <View style={[s.textField, s.mt5]}>
-                <Text style={s.labelField}>No.KK. </Text>
-                <Text style={s.contentField}>{props?.no_kk || ""}</Text>
+                <Text style={s.labelField}></Text>
+                <Text style={s.dividerField}></Text>
+                <Text style={s.contentField}>No.KK. {"    "}{props?.no_kk || ""}</Text>
               </View>
             </View>
             {/* keperluan */}
@@ -123,7 +130,7 @@ export const PdfDocument = ({ props }) => {
             <View style={[s.textField, s.mt20]}>
               <Text style={s.labelField}>Berlaku</Text>
               <Text style={s.dividerField}>:</Text>
-              <Text style={s.contentField}>{props.start_date} s/d {props.end_date}</Text>
+              <Text style={s.contentField}>{props?.start_date ? dateFormat(props?.start_date) : ""} s/d {props?.end_date ? dateFormat(props?.end_date) : ""}</Text>
             </View>
             {/* keterangan */}
             <View style={[s.textField, s.mt5]}>
@@ -136,17 +143,19 @@ export const PdfDocument = ({ props }) => {
             Demikian Surat Keterangan ini dibuat untuk dipergunakan seperlunya.
           </Text>
 
-          <View style={[s.ttdContainer, s.mt20]}>
+          <View style={[s.ttdContainer, s.mt30]}>
+
             <View style={[s.ttdPemegangSurat, s.mt15]}>
               <Text style={[s.textBasic]}></Text>
               <Text style={[s.textBasic, s.namaPenandatangan]}></Text>
             </View>
+
             <View style={[s.ttdContent]}>
               <Text style={[s.textBasic]}>
-                {props.tempat_surat}
+                {props.tempat_surat}, {props?.tgl_surat ? dateFormat(props?.tgl_surat) : ''}
               </Text>
 
-              <Text style={[s.textBasic]}>
+              <Text style={[s.textBasic, s.mt5]}>
                 {props.jabatan}
               </Text>
               <Text style={[s.textBasic, s.namaPenandatangan]}>
@@ -226,13 +235,13 @@ const s = StyleSheet.create({
     textAlign: "center",
   },
   header3: {
-    fontFamily: "Times-Bold",
-    fontSize: 16,
+    // fontFamily: "Times-Bold",
+    fontSize: 14,
     textDecoration: "underline",
   },
   header4: {
-    fontFamily: "Times-Bold",
-    fontSize: 16,
+    // fontFamily: "Times-Bold",
+    fontSize: 12,
   },
 
   contentContainer: {
@@ -279,6 +288,7 @@ const s = StyleSheet.create({
   namaPenandatangan: {
     fontFamily: "Times-Bold",
     marginTop: 50,
+    textDecoration: "underline",
   },
 });
 

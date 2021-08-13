@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Form, Input, Button } from "antd";
+import { Form, Input, Button, message } from "antd";
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { useRouter } from 'next/router';
@@ -28,13 +28,15 @@ const LoginForm = (props, { setView }) => {
   const router = useRouter()
   const [form] = Form.useForm();
   const onFinish = (values) => {
-    if (values.username === "admin" && values.password === "admin") {
+    if (values.username === "admin" && values.password === "Candisari2021") {
       router.push("/dashboard")
       const params = {
         username: values.username,
         isLogin: true,
       }
       props.login(params)
+    } else {
+      message.error('Username/Password tidak sesuai');
     }
   };
   const onFinishFailed = (errorInfo) => {
@@ -95,9 +97,9 @@ const LoginForm = (props, { setView }) => {
             placeholder="Masukkan Password"
           />
         </Form.Item>
-        <p>Belum punya akun ? <Button type="link" onClick={() => setView("register")}>Daftar</Button></p>
+        {/* <p>Belum punya akun ? <Button type="link" onClick={() => setView("register")}>Daftar</Button></p> */}
         <Form.Item {...tailLayout}>
-          <Button block className="mt-2" type="primary" htmlType="submit" onClick={() => onFormDone()}>
+          <Button block className="mt-5" type="primary" htmlType="submit" onClick={() => onFormDone()}>
             Masuk
           </Button>
         </Form.Item>

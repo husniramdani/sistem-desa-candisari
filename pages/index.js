@@ -11,7 +11,10 @@ export default function HomePage() {
         {/* <link rel="shortcut icon" href="/icon/logo.ico" /> */}
         <title>Desa Candisari</title>
       </Head>
-      <div className="flex flex-col sm:flex-row">
+      <div className="lg:hidden w-full text-center mt-32">
+        <h2 className="text-4xl font-bold">Buka di laptop ya!</h2>
+      </div>
+      <div className="hidden lg:flex flex-col sm:flex-row">
         <div className="w-auto sm:w-8/12 p-20 min-h-screen bg-main">
           {/* logo dan kawan-kwannya */}
           <div className="flex flex-row relative">
@@ -35,12 +38,13 @@ export default function HomePage() {
         </div>
         <div className="flex w-auto sm:w-4/12 py-20 px-10">
           <div className="self-center m-auto w-8/12">
-            {
+            <LoginForm setView={setView} />
+            {/* {
               view === "login" ?
                 <LoginForm setView={setView} />
                 :
                 <RegisterForm setView={setView} />
-            }
+            } */}
           </div>
         </div>
       </div>

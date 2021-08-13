@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
-import { Form, Input, Row, Col } from "antd";
-import DatePicker from "@components/DatePicker";
+import { Form, Input, Row, Col, DatePicker } from "antd";
+// import DatePicker from "@components/DatePicker";
 
 const tailLayout = {
   labelCol: {
@@ -62,6 +62,7 @@ const Step4 = ({ }) => {
             <DatePicker
               className="full-width"
               format={"DD MMMM YYYY"}
+              allowClear={false}
             />
           </Form.Item>
         </Col>

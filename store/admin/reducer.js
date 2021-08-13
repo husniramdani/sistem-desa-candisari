@@ -1,11 +1,13 @@
 import { formActionTypes } from './action'
 
 const formInitialState = {
+  current_step: 0,
+
   nama_perangkat_desa: "",
   jabatan: "",
 
   nama: "",
-  jenis_kelamin: "pria",
+  jenis_kelamin: "Laki-laki",
   tempat_lahir: "",
   tgl_lahir: null,
   agama: "",
@@ -20,13 +22,19 @@ const formInitialState = {
   keperluan: "",
   keterangan: "",
 
-  nomor_surat: "",
+  nomor_surat: "451/008/03/VII/2021",
   tempat_surat: "Candisari",
-  tgl_surat: null,
+  tgl_surat: new Date(),
 }
 
 export default function reducer(state = formInitialState, action) {
   switch (action.type) {
+    case formActionTypes.RESET_FORM:
+      return Object.assign({}, state, formInitialState)
+    case formActionTypes.SET_STEP:
+      return Object.assign({}, state, {
+        current_step: action.data,
+      })
     case formActionTypes.ADD_STEP_1:
       return Object.assign({}, state, {
         nama_perangkat_desa: action.data.nama_perangkat_desa,
